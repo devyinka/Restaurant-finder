@@ -1,4 +1,4 @@
-import {createContext, useState } from "react";
+import {createContext, useState, useEffect } from "react";
 import { LocationTransform,Location_request } from "./location_service";
 
 
@@ -29,6 +29,9 @@ export const LocationContexProvider=({children})=>{
         })
     };
 
+    useEffect(() => {
+        onSearch(keyword);
+    }, []);
  
   return( <createlocationcontex.Provider value={{
     keyword,
