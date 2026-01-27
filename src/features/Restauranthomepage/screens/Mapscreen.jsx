@@ -12,18 +12,16 @@ export default function Mapscreen({ navigation }) {
   const { location } = useContext(createlocationcontex);
   const { restaurant = [] } = useContext(Restaurantcontext);
   const [latdelta, setlatdelta] = useState(0.05);
-  if (!location || !location.lat || !location.lng || !location.viewport) {
+  if (!location || !location.lat || !location.lng) {
+    // !location.viewport;//  i may later include thisif app is not working
     return null;
   }
-  const { lat, lng, viewport } = location;
-  console.log(viewport); // i will later delete this
+  const { lat, lng } = location;
+  console.log(lat, lng); // i will later delete this
 
   useEffect(() => {
-    if (viewport?.northeast?.lat && viewport?.southwest?.lat) {
-      const deltaLat = viewport.northeast.lat - viewport.southwest.lat;
-      setlatdelta(deltaLat || 0.05);
-    }
-  }, [viewport]);
+    setlatdelta(0.05);
+  }, [location, restaurant]);
 
   return (
     <AreaView>
@@ -41,8 +39,8 @@ export default function Mapscreen({ navigation }) {
             key={restaurant.id}
             title={restaurant.name}
             coordinate={{
-              latitude: restaurant.geometry.location.lat,
-              longitude: restaurant.geometry.location.lng,
+              latitude: restaurant.latitude,
+              longitude: restaurant.longitude,
             }}
           >
             <Callout onPress={() => navigation.navigate("Detail", restaurant)}>
@@ -59,5 +57,3 @@ const Map = styled(MapView)`
   width: 100%;
   height: 100%;
 `;
-
-// region={{ latitude: lat, longitude: lng, latitudeDelta: latdelta, longitudeDelta: 0.02 }}
