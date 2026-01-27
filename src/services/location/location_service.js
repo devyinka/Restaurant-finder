@@ -2,24 +2,23 @@
 import { locations } from "./location_mock";
 export const Location_request = async (Searchrequest) => {
   return new Promise((resolve, reject) => {
-    Location = locations[Searchrequest];
-    if (!Location) {
+    const location = locations[Searchrequest];
+    if (!location) {
       reject("corrupt");
     } else {
-      resolve(Location);
+      resolve(location);
     }
   });
 };
 
 export const LocationTransform = ({ results }) => {
-  console.log(results);
+  console.log("LocationTransform input:", { results });
+  if (!results || !Array.isArray(results) || results.length === 0) {
+    throw new Error("Invalid location data");
+  }
   const { geometry = {} } = results[0];
   const { lat, lng } = geometry.location;
-  return { lat, lng, viewport: geometry.viewport };
+  const viewport = geometry.viewport;
+  console.log("LocationTransform output:", { lat, lng, viewport });
+  return { lat, lng, viewport };
 };
-//  useEffect(()=>{
-//       async function fetchRecipe(){
-//       let res= await fetch(`${URL}?query=${Query}&apiKey=${API_key}`);
-//       let response= await res.json ();
-//       setRecipe(response.results);
-//       }  fetchRecipe();},[])
