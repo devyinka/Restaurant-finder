@@ -1,9 +1,11 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { PRODUCTION, DEVELOPMENT } from "@env";
 export const createlocationcontex = createContext();
 
-const API_URL = "https://conjugally-unciteable-charline.ngrok-free.dev";
+const API_URL = __DEV__ ? DEVELOPMENT : PRODUCTION;
 console.log("API_URL:", API_URL);
+console.log("Environment:", __DEV__ ? "Development" : "Production");
 export const LocationContexProvider = ({ children }) => {
   const [keyword, setkeyword] = useState("chicago");
   const [loading, setloading] = useState(false);
@@ -38,22 +40,6 @@ export const LocationContexProvider = ({ children }) => {
       }
     };
     getlatlong(searchkeyword);
-
-    // Location_request(searchkeyword.toLowerCase())// i willl comment all this function out and delete location_service mock data later
-    //   .then((locationData) => {
-    //     console.log("Location data received:", locationData);
-    //     return LocationTransform(locationData);
-    //   })
-    //   .then((response) => {
-    //     console.log("Location transformed:", response);
-    //     setloading(false);
-    //     setlocation(response);
-    //   })
-    //   .catch((err) => {
-    //     console.log("Location search error:", err);
-    //     seterror(err);
-    //     setloading(false);
-    //   });
   };
 
   useEffect(() => {

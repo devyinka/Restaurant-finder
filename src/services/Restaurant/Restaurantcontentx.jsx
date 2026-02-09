@@ -1,10 +1,11 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import axios from "axios";
+import { PRODUCTION, DEVELOPMENT } from "@env";
 import { createlocationcontex } from "../location/locationcontext";
 export const Restaurantcontext = createContext();
 
 export const Restaurantprovider = ({ children }) => {
-  const API_URL = "https://conjugally-unciteable-charline.ngrok-free.dev";
+  const API_URL = __DEV__ ? DEVELOPMENT : PRODUCTION;
   const [restaurant, setrestaurant] = useState([]);
   const [isloading, setisloading] = useState(false);
   const [error, seterror] = useState(null);
@@ -29,20 +30,6 @@ export const Restaurantprovider = ({ children }) => {
       console.log(error);
     }
   };
-
-  //   const Retriverestaurant = async (place) => {
-  //     setisloading(true);
-  //     setrestaurant([]);
-  //     try {
-  //       const response = await Servicerequest(place.lat, place.lng);
-  //       setisloading(false);
-  //       setrestaurant(response.data || response);
-  //     } catch (err) {
-  //       setisloading(false);
-  //       seterror(err);
-  //       console.log(err);
-  //     }
-  //   };
 
   useEffect(() => {
     if (location.lat && location.lng) {
