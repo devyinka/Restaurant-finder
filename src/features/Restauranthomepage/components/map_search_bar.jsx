@@ -8,7 +8,7 @@ const MapSearchBar = () => {
   const [search, setSearch] = useState(keyword);
   useEffect(() => {
     Search(search);
-  }, [search]);
+  }, [Search, keyword]);
 
   return (
     <View style={styles.search}>
