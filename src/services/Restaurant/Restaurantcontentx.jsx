@@ -35,7 +35,7 @@ export const Restaurantprovider = ({ children }) => {
     if (location.lat && location.lng) {
       getRestaurant(location);
     }
-  }, [location]);
+  }, [location.lat, location.lng]);
 
   return (
     <Restaurantcontext.Provider value={{ restaurant, isloading, error }}>

@@ -1,14 +1,15 @@
 import { Searchbar } from "react-native-paper";
 import { createlocationcontex } from "../../../services/location/locationcontext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 
 const MapSearchBar = () => {
   const { keyword, Search } = useContext(createlocationcontex);
   const [search, setSearch] = useState(keyword);
+
   useEffect(() => {
-    Search(search);
-  }, [Search, keyword]);
+    setSearch(keyword);
+  }, [keyword]);
 
   return (
     <View style={styles.search}>
